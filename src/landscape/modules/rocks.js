@@ -46,5 +46,5 @@ K.createRocks=function(scene){var A=K.ARENA,items=[],GT=glowTex(),n=0,i,m4=new T
   K.hooks.push(update);
   return{setArena:function(wx){items.forEach(function(it){var p=it.p,x,z=p.z;
     if(it.k==='s')x=p.s*(wx+p.d);else if(it.k==='b')x=p.u*(wx+8);else x=p.u*(wx+1);
-    it.m.position.set(x,p.y+K.H(x,z),z)})}}};\r
+    it.m.position.set(x,p.y+K.H(x,z),z)})}}};
 })();
