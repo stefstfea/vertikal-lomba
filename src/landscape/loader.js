@@ -17,7 +17,15 @@
           console.warn('[7 KAIH] Pembersihan renderer Pulau Awan:', disposeError);
         }
         window.__kaihRoot = null;
-        document.title='7 KAIH · Ladang Langit';
+        // Fase 3: dispose WebGL Landscape jika sudah pernah dimuat (pindah layar ulang)
+        try {
+          if (window.KAIH && typeof window.KAIH.dispose === 'function') {
+            window.KAIH.dispose();
+          }
+        } catch (e) {
+          console.warn('[7 KAIH] KAIH.dispose():', e);
+        }
+        document.title='7 KAIH \u00b7 Ladang Langit';
         document.body.className='';
         document.body.innerHTML=window.__LANDSCAPE_BODY__;
         var style=document.getElementById('runtime-style');

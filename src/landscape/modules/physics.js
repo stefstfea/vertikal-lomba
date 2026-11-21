@@ -108,6 +108,7 @@ K.createPhysics=function(scene){var A=K.ARENA,ZMIN=A.zmin,ZMAX=A.zmax,ZC=A.zc;
   var ease=function(x){x=Math.min(1,Math.max(0,x));return x*x*(3-2*x)};
   api.step=function(dt){api.time+=dt;
     if(api.started)items.forEach(function(it){if(!it.spawned&&api.time>=api.t0+it.idx*api.gap)spawn(it)});
+    // Fase 3: accumulator capped FIX*5 (max 5 substep) – fisika stabil tanpa spiral kematian
     acc=Math.min(acc+dt,FIX*5);while(acc>=FIX){if(api.beforeStep)api.beforeStep();W.step(FIX);lock();acc-=FIX}
     if(K.drag&&K.drag.enabled&&!K.noRespawn)watch(dt);   // v6: pantau bola yang hilang (aktif setelah cutscene pembuka)
     items.forEach(function(it){if(!it.spawned)return;var b=it.body,T=it.tilt;it.age+=dt;
