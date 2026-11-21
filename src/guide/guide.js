@@ -207,7 +207,8 @@
     document.addEventListener('pointerdown', function (ev) { if (menu.classList.contains('on') && !menu.contains(ev.target) && !fab.contains(ev.target)) closeMenu(); }, true);
     addEventListener('pointermove', function (e) { ptr.x = e.clientX; ptr.y = e.clientY; ptr.t = clock; }, { passive: true });
     addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
-    addEventListener('resize', onResize);
+    // Fase 3: debounce resize 120ms
+    var _grTimer=0; addEventListener('resize', function(){clearTimeout(_grTimer);_grTimer=setTimeout(onResize,120);});
     document.addEventListener('visibilitychange', function () { if (!document.hidden) loop(); });
     // Lanjutkan ke dashboard di tengah tutorial -> konfirmasi dulu (capture: sebelum handler bawaan)
     document.addEventListener('click', function (ev) {
@@ -301,7 +302,7 @@
     W = innerWidth; H = innerHeight;
     Rpx = clamp(Math.min(W, H) * 0.12, 34, 74);
     if (!ready) return;
-    DPR = Math.min(window.devicePixelRatio || 1, gfx() === 'extreme' ? 3 : 2);
+    DPR = Math.min(window.devicePixelRatio || 1, gfx() === 'extreme' ? 3 : (window.matchMedia('(max-width:700px)').matches ? 1.5 : 2));   // Fase 3: maks 1.5 mobile
     renderer.setPixelRatio(DPR); renderer.setSize(W, H, false);
     cam.left = 0; cam.right = W; cam.top = H; cam.bottom = 0; cam.updateProjectionMatrix();
     partSys.mat.uniforms.uDpr.value = DPR;
