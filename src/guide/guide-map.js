@@ -124,7 +124,7 @@
       M.pulse();
       try { window.dispatchEvent(new CustomEvent('kaih-map-click')); } catch (err) {}
     });
-    addEventListener('resize', function () { W = innerWidth; H = innerHeight; sizeFx(); if (resting) M.restNow(); });
+    var _mapRsTimer = 0; addEventListener('resize', function () { clearTimeout(_mapRsTimer); _mapRsTimer = setTimeout(function () { W = innerWidth; H = innerHeight; sizeFx(); if (resting) M.restNow(); }, 120); });
     sizeFx();
   }
 

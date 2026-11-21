@@ -13,12 +13,12 @@ cv.addEventListener('pointerdown',function(e){
   if(!K.camPan.enabled||st.on||(e.pointerType==='mouse'&&e.button!==0))return;
   if(K.drag&&K.drag.enabled&&K.drag.pickAt(e.clientX,e.clientY))return;   // kena bola -> seret bola (drag.js)
   st.on=true;st.id=e.pointerId;st.x0=e.clientX;st.yaw0=tgt;st.lx=e.clientX;st.lt=performance.now();st.v=0;st.moved=false;
-  try{cv.setPointerCapture(e.pointerId)}catch(_){}});
+  try{cv.setPointerCapture(e.pointerId)}catch(_){}},{passive:true});
 cv.addEventListener('pointermove',function(e){
   if(!st.on||e.pointerId!==st.id)return;var now=performance.now(),dx=e.clientX-st.x0;
   if(!st.moved&&Math.abs(dx)<6)return;st.moved=true;
   tgt=clamp(st.yaw0+dx*sens(),-MAXYAW,MAXYAW);   // 'pegang dunia': seret ke kanan -> dunia ikut ke kanan (kamera menoleh ke kiri)
-  var dt=Math.max(1,now-st.lt);st.v=.7*st.v+.3*((e.clientX-st.lx)*sens()/dt*1000);st.lx=e.clientX;st.lt=now});
+  var dt=Math.max(1,now-st.lt);st.v=.7*st.v+.3*((e.clientX-st.lx)*sens()/dt*1000);st.lx=e.clientX;st.lt=now},{passive:true});
 function end(e){if(!st.on||(e&&e.pointerId!==st.id))return;st.on=false;try{cv.releasePointerCapture(st.id)}catch(_){}
   if(st.moved)tgt=clamp(tgt+clamp(st.v,-3,3)*.18,-MAXYAW,MAXYAW)}   // lepas: sedikit meluncur (inersia)
 cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);addEventListener('blur',function(){end()});

@@ -401,7 +401,13 @@
       if (!shattered && t >= T_SHATTER) { shattered = true; onShatter(bg, fx, pre); }
       const alive = render(t);
       if (alive || t < T_SHATTER) requestAnimationFrame(frame);
-      else { splash.classList.add('done'); g.clearRect(0, 0, W, H); finished = true; }
+      else {
+        splash.classList.add('done');
+        g.clearRect(0, 0, W, H);
+        finished = true;
+        window.removeEventListener('resize', resize);
+        window.removeEventListener('keydown', onGlobalKeyDown);
+      }
     })(t0);
 
     setTimeout(playPrelude, T_TEXT * 1000 + 0);
@@ -432,9 +438,10 @@
 
   splash.addEventListener('click', start);
   splash.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); start(null); } });
-  window.addEventListener('keydown', (e) => {
+  function onGlobalKeyDown(e) {
     if (started || e.metaKey || e.ctrlKey || e.altKey || e.key === 'Tab' || e.key === 'Shift') return;
     start(null);
-  });
+  }
+  window.addEventListener('keydown', onGlobalKeyDown);
   try { splash.focus({ preventScroll: true }); } catch (e) {}
 })();

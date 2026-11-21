@@ -507,11 +507,15 @@
   const ctx2d = canvas.getContext('2d');
   let particles = [];
 
+  let resizeCanvasTimer = 0;
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
-  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeCanvasTimer);
+    resizeCanvasTimer = setTimeout(resizeCanvas, 120);
+  });
   resizeCanvas();
 
   for (let i = 0; i < 18; i++) {
@@ -526,9 +530,14 @@
     });
   }
 
+  let beatRafId = 0;
   function animateBeatAndVisuals(timestamp) {
-    requestAnimationFrame(animateBeatAndVisuals);
-    if (isInWorld) return;
+    if (isInWorld) {
+      if (beatRafId) cancelAnimationFrame(beatRafId);
+      beatRafId = 0;
+      return;
+    }
+    beatRafId = requestAnimationFrame(animateBeatAndVisuals);
 
     const time = timestamp * 0.001;
     let bassEnergy = 0;

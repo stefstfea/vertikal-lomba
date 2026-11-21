@@ -143,7 +143,7 @@ function mute(m){muted=(m===undefined)?!muted:!!m;if(master)master.gain.setTarge
 K.sfx={ensure:ensure,tap:tap,charge:charge,pulsar:pulsar,boom:boom,portalOpen:portalOpen,humStart:humStart,humStop:humStop,spawn:spawn,impact:impact,grab:grab,portalClose:portalClose,pop:pop,setVolume:setVolume,mute:mute};
 // buka kunci audio pada sentuhan pertama (aturan autoplay browser)
 function unlock(){ensure();if(ctx&&ctx.state==='running'){['pointerdown','touchend','keydown','click'].forEach(function(e){removeEventListener(e,unlock,true)})}}
-['pointerdown','touchend','keydown','click'].forEach(function(e){addEventListener(e,unlock,true)});
+['pointerdown','touchend','keydown','click'].forEach(function(e){addEventListener(e,unlock,{capture:true,passive:true})});
 addEventListener('keydown',function(e){if((e.key==='m'||e.key==='M')&&!e.ctrlKey&&!e.metaKey&&!e.altKey)mute()});
 // suara dimatikan saat tab disembunyikan, supaya tidak berbunyi di latar belakang
 document.addEventListener('visibilitychange',function(){if(!ctx)return;if(document.hidden)ctx.suspend().catch(function(){});else if(!muted)ctx.resume().catch(function(){})});
