@@ -1,0 +1,15 @@
+7 KAIH Dashboard WFH - Revisi 2
+Tanggal: 17 November 2026
+
+Perubahan:
+1. Pulau Awan: ukuran peta saat posisi diam disesuaikan menjadi 24% dari sisi layar (min. 104 px, maks. 180 px) agar lebih seimbang dengan tombol landscape/pintu.
+2. Ladang Langit: menu Guide asli sekarang memuat empat pilihan saat berada di Ladang Langit: Panduan Guide, Edit Bola, Edit Jam, dan Edit Tampilan. Tombol kontrol terpisah disembunyikan; fungsi kontrol tetap dipanggil dari menu Guide.
+3. Ladang Langit: memperbaiki pemanggilan renderer.setSize() yang sebelumnya ikut terkomentar akibat penempatan komentar pada baris yang sama.
+4. Ladang Langit: antialiasing selalu aktif, pixel ratio untuk level Sedang/Tinggi ditingkatkan secara adaptif mengikuti kemampuan layar, dan resolusi shadow awal dinaikkan menjadi 1024x1024.
+5. Universal: pengaturan ukuran UI dan aset revisi sebelumnya dipertahankan.
+
+Pemeriksaan:
+- Node.js syntax check untuk modul JavaScript yang diubah: lulus.
+- Inline JavaScript di index.html: lulus syntax check.
+- tools/verify-build.js: 90 PASS, 0 FAIL, 1 WARN (baseline single-file v12 tidak disertakan, sehingga perbandingan baseline tidak dilakukan).
+- Belum dilakukan pengujian visual langsung di browser pada perangkat pengguna.

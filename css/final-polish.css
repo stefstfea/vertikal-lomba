@@ -1,0 +1,13 @@
+/* ============================================================================
+   final-polish.css — finalisasi
+   1) halaman awal: Guide 3D + "Ketuk di mana saja"
+   2) dialog konfirmasi (Pulau Awan <-> Ladang Langit): judul normal & tebal, tanpa efek per-huruf / gelombang
+   ========================================================================== */
+#kaih-splash .splash-content { display: flex; flex-direction: column; align-items: center; gap: clamp(6px, 2vh, 18px); }
+#splash-guide { width: min(62vw, 42vh, 340px); height: min(62vw, 42vh, 340px); display: block; pointer-events: none; }
+.splash-tap { margin: 0; font: 700 clamp(17px, 4.4vw, 25px)/1.4 "Plus Jakarta Sans", system-ui, sans-serif; letter-spacing: .06em; color: #231a4f;
+  animation: splashBreath 3.4s ease-in-out infinite; }
+
+#kx-card h2, #kx-home-confirm h2, #kx-dlg h2 { font-family: "Plus Jakarta Sans", system-ui, sans-serif !important; font-weight: 700 !important; font-style: normal !important;
+  letter-spacing: .01em !important; text-transform: none !important; animation: none !important; transform: none !important; filter: none !important; }
+#kx-card h2 .kaih-sprite-char, #kx-home-confirm h2 .kaih-sprite-char, #kx-dlg h2 .kaih-sprite-char { transform: none !important; animation: none !important; filter: none !important; text-shadow: none !important; display: inline !important; }

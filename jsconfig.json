@@ -1,0 +1,13 @@
+﻿{
+  "compilerOptions": {
+    "target": "ES2020",
+    "checkJs": false
+  },
+  "exclude": [
+    "assets/audio/**",
+    "js/vendor/**",
+    "_old/**",
+    "node_modules",
+    ".git"
+  ]
+}

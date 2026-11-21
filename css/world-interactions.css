@@ -1,0 +1,108 @@
+
+/* Lightweight world interaction feedback */
+.kaih-world-pop {
+  animation: kaihWorldPop .42s cubic-bezier(.2,1.5,.45,1) both !important;
+  transform-origin: center center;
+}
+@keyframes kaihWorldPop {
+  0% { scale: 1; filter: brightness(1) drop-shadow(0 0 0 rgba(255,236,150,0)); }
+  42% { scale: 1.12; filter: brightness(1.22) drop-shadow(0 0 12px rgba(255,236,150,.6)); }
+  72% { scale: .97; }
+  100% { scale: 1; filter: brightness(1) drop-shadow(0 0 0 rgba(255,236,150,0)); }
+}
+.kaih-pop-ripple {
+  position: fixed; pointer-events: none; z-index: 99998; width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,.95); border-radius: 50%;
+  transform: translate(-50%,-50%) scale(.3); animation: kaihRipple .55s ease-out forwards;
+  box-shadow: 0 0 16px rgba(255,236,150,.6);
+}
+@keyframes kaihRipple {
+  to { transform: translate(-50%,-50%) scale(4.2); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .kaih-world-pop,.kaih-pop-ripple { animation-duration: .01ms !important; }
+}
+
+/* =====================================================================
+   FIX #3 (Fase 2.1): Z-Index Stacking & Layout Collision — Desktop View
+   =====================================================================
+   Hierarki z-index yang telah dirapikan:
+     #kx-gear (Settings ⚙)      : z-index 2147482000  — kiri atas
+     #kx-set  (Settings panel)   : z-index 2147482001  — panel settings
+     #kx-skip (Skip button)      : z-index 2147483001  — kanan atas
+     #kx-skip-menu               : z-index 2147483001  — dropdown skip
+     #kx-device (device dialog)  : z-index 2147483100  — di atas semua
+     Floating buttons landscape  : z-index 1200        — kanan/kiri bawah
+     Dashboard header / overlay  : z-index 1100        — di bawah UI system
+   ================================================================== */
+
+/* --- Floating Buttons Landscape (edit, cam, time, dash) --- kiri/kanan bawah --- */
+/* Pastikan tidak ada collision dengan Settings (kiri atas) maupun Skip (kanan atas) */
+#edit-btn, #cam-btn, #time-btn, #dash-btn {
+  z-index: 1200 !important;
+  position: fixed !important;
+}
+
+/* Edit button: kiri bawah, hindari gear settings di kiri atas */
+#edit-btn {
+  bottom: max(16px, env(safe-area-inset-bottom));
+  left: max(14px, env(safe-area-inset-left));
+}
+
+/* Cam button: kanan bawah */
+#cam-btn {
+  bottom: max(16px, env(safe-area-inset-bottom));
+  right: max(14px, env(safe-area-inset-right));
+}
+
+/* Time button: kanan bawah, di atas cam-btn */
+#time-btn {
+  bottom: calc(max(16px, env(safe-area-inset-bottom)) + 60px);
+  right: max(14px, env(safe-area-inset-right));
+}
+
+/* Dash button (Ladang Langit dashboard toggle): kanan bawah, paling bawah */
+#dash-btn {
+  bottom: calc(max(16px, env(safe-area-inset-bottom)) + 120px);
+  right: max(14px, env(safe-area-inset-right));
+}
+
+/* --- kaih-glass-toggle (Landscape dashboard toggle) --- */
+#kaih-glass-toggle {
+  z-index: 1200 !important;
+}
+
+/* --- Dashboard header / info panel di landscape --- */
+/* Class umum Tailwind yang dipakai sebagai header card Pulau Awan — geser bawah agar tidak tertimpa ⚙ */
+.pointer-events-none.fixed.top-4,
+.pointer-events-none.fixed.left-4.top-4 {
+  top: max(14px, env(safe-area-inset-top)) !important;
+}
+/* Fase 3.4: kartu judul Pulau Awan di KANAN tombol ⚙ (bawah ⚙ dikosongkan untuk Guide) */
+.pointer-events-none.fixed.left-4.top-4 {
+  left: calc(max(14px, env(safe-area-inset-left)) + 54px) !important;
+  padding-top: 0 !important;
+}
+html.dev-phone .pointer-events-none.fixed.left-4.top-4 {
+  left: calc(max(14px, env(safe-area-inset-left)) + 60px) !important;
+}
+
+/* --- Pastikan kaih-dashboard tidak menimpa #kx-gear & #kx-skip --- */
+#kaih-dashboard {
+  z-index: 1100;
+}
+
+/* --- Pastikan kaih-glass-overlay (iframe dashboard Ladang Langit) tidak menimpa UI sistem --- */
+#kaih-glass-overlay {
+  z-index: 1050;
+}
+
+/* --- Desktop-specific: lebar panel settings sudah diatur settings.js, ini override keamanan --- */
+html.dev-laptop #kx-set {
+  width: min(360px, calc(100vw - 28px));
+}
+
+/* --- Gap keselamatan top kiri untuk dev-laptop: tombol-tombol tidak bertumpuk dengan #kx-gear --- */
+html.dev-laptop #edit-btn {
+  left: calc(max(14px, env(safe-area-inset-left)) + 60px);
+}

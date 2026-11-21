@@ -1,0 +1,161 @@
+# ==============================================================================
+# 7 KAIH - High-Performance .htaccess for Apache / LiteSpeed (Griv Hosting Linux)
+# Optimized for WebGL, 3D Assets, Low-latency Caching, and Maximum Compression
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. SECURITY & DIRECTORY SETTINGS
+# ------------------------------------------------------------------------------
+Options -Indexes
+DirectoryIndex index.html
+
+# Prevent clickjacking while allowing doorway iframe embedding for interactive map
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Block access to git, markdown notes, reports, and python tools if accidentally uploaded
+<FilesMatch "^(\.git|\.env|.*\.py|.*\.md|.*\.txt|.*REPORT\.json)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ------------------------------------------------------------------------------
+# 2. PROPER MIME TYPES (WebP, Fonts, 3D Models, Modern JS)
+# ------------------------------------------------------------------------------
+<IfModule mod_mime.c>
+    # Modern image formats
+    AddType image/webp                          .webp
+    AddType image/svg+xml                       .svg .svgz
+    AddEncoding gzip                            .svgz
+
+    # Web fonts
+    AddType font/woff                           .woff
+    AddType font/woff2                          .woff2
+    AddType application/vnd.ms-fontobject       .eot
+    AddType font/ttf                            .ttf
+    AddType font/otf                            .otf
+
+    # 3D models & spatial assets
+    AddType model/gltf+json                     .gltf
+    AddType model/gltf-binary                   .glb
+
+    # Scripts & Data
+    AddType application/javascript              .js .mjs
+    AddType application/json                    .json
+
+    # Audio
+    AddType audio/mpeg                          .mp3
+    AddType audio/ogg                           .ogg .oga
+    AddType audio/wav                           .wav
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# 3. COMPRESSION: BROTLI & GZIP (MOD_DEFLATE)
+# Crucial for low-end shared hosting bandwidth & instant first paint
+# ------------------------------------------------------------------------------
+# A. Brotli Compression (LiteSpeed / Apache mod_brotli)
+<IfModule mod_brotli.c>
+    BrotliCompressionQuality 6
+    BrotliFilterByType TEXT_HTML text/html
+    BrotliFilterByType TEXT_PLAIN text/plain
+    BrotliFilterByType TEXT_CSS text/css
+    BrotliFilterByType TEXT_XML text/xml
+    BrotliFilterByType APPLICATION_JAVASCRIPT application/javascript
+    BrotliFilterByType APPLICATION_X_JAVASCRIPT application/x-javascript
+    BrotliFilterByType TEXT_JAVASCRIPT text/javascript
+    BrotliFilterByType APPLICATION_JSON application/json
+    BrotliFilterByType APPLICATION_XML application/xml
+    BrotliFilterByType IMAGE_SVG_XML image/svg+xml
+    BrotliFilterByType FONT_WOFF font/woff
+    BrotliFilterByType FONT_WOFF2 font/woff2
+    BrotliFilterByType MODEL_GLTF_JSON model/gltf+json
+</IfModule>
+
+# B. Deflate / Gzip Compression (Standard Apache fallback)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE font/woff
+    AddOutputFilterByType DEFLATE font/woff2
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE model/gltf+json
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# 4. BROWSER CACHE-CONTROL & EXPIRES (1 Year for Static, Revalidate for HTML)
+# ------------------------------------------------------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+
+    # HTML files: Immediate revalidation (ETag check) so code updates take effect instantly
+    ExpiresByType text/html "access plus 0 seconds"
+
+    # CSS & JavaScript
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType application/x-javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+
+    # Images
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # Fonts
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+
+    # Audio Media
+    ExpiresByType audio/mpeg "access plus 1 year"
+    ExpiresByType audio/ogg "access plus 1 year"
+    ExpiresByType audio/wav "access plus 1 year"
+
+    # 3D Models
+    ExpiresByType model/gltf-binary "access plus 1 year"
+    ExpiresByType model/gltf+json "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+    # HTML must always check with server before using cached version (avoids stale deploy for judges)
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
+
+    # Immutable 1-year cache for heavy static assets
+    <FilesMatch "\.(css|js|woff|woff2|ttf|png|jpg|jpeg|webp|svg|mp3|glb|gltf)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
+
+# ------------------------------------------------------------------------------
+# 5. ETags & Charset
+# ------------------------------------------------------------------------------
+FileETag MTime Size
+AddDefaultCharset UTF-8

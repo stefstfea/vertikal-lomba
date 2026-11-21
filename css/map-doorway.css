@@ -1,0 +1,36 @@
+/* ============================================================================
+   PETA SEBAGAI PINTU (doorway) — Pulau Awan -> Dashboard Peta
+   Urutan: zoom ke peta -> kilau -> gulungan membuka -> dashboard (iframe) muncul.
+   Dikendalikan src/prelude/map-doorway.js. z-index tetap di bawah tombol ⚙ (2147482000).
+   ============================================================================ */
+html.kx-dash-open #kx-guide-cv, html.kx-dash-open #kx-guide-hit, html.kx-dash-open #kx-guide-say,
+html.kx-dash-open #kx-guide-fab, html.kx-dash-open #kx-guide-menu, html.kx-dash-open #kx-door,
+html.kx-dash-open #kx-home, html.kx-dash-open #kx-map-dim, html.kx-dash-open #kx-map-fx {
+  opacity: 0 !important; pointer-events: none !important; transition: opacity .45s ease !important;
+}
+html.kx-dash-open #kx-map { visibility: hidden !important; }
+
+#kx-dm-scrim { position: fixed; inset: 0; z-index: 2147481750; opacity: 0; display: none; pointer-events: auto; touch-action: none;
+  background: radial-gradient(ellipse at 50% 46%, rgba(20,24,40,.35) 0%, rgba(12,15,30,.78) 70%, rgba(6,8,18,.92) 100%); }
+#kx-dm-icon { position: fixed; left: 0; top: 0; z-index: 2147481770; display: none; pointer-events: none; will-change: transform, opacity;
+  filter: drop-shadow(0 14px 22px rgba(0,0,0,.5)) drop-shadow(0 0 18px rgba(255,236,190,.55)); user-select: none; -webkit-user-drag: none; }
+#kx-dm-rig { position: fixed; left: 0; top: 0; z-index: 2147481780; display: none; pointer-events: none; will-change: transform, opacity; }
+#kx-dm-rig .shadow { position: absolute; inset: 0; background: rgba(0,0,0,.001); box-shadow: 0 26px 46px rgba(0,0,0,.5); transform-origin: 50% 50%; border-radius: 2px; }
+#kx-dm-rig .sheet { position: absolute; inset: 0; overflow: hidden; background: #e8cfa3 url("../peta/assets/map-sepia.jpg") center / 100% 100% no-repeat; will-change: clip-path; }
+#kx-dm-rig .eT, #kx-dm-rig .eB { position: absolute; left: 0; right: 0; height: 34px; pointer-events: none; }
+#kx-dm-rig .eT { background: linear-gradient(180deg, rgba(70,38,8,.55), rgba(70,38,8,0)); top: 0; }
+#kx-dm-rig .eB { background: linear-gradient(0deg, rgba(70,38,8,.55), rgba(70,38,8,0)); top: 0; }
+#kx-dm-rig .shine { position: absolute; top: 0; bottom: 0; width: 46%; left: 0; mix-blend-mode: screen; pointer-events: none;
+  background: linear-gradient(105deg, rgba(255,244,200,0) 0%, rgba(255,244,200,.55) 50%, rgba(255,244,200,0) 100%); }
+#kx-dm-rig .rod { position: absolute; left: 0; top: 0; border-radius: 999px; transform-origin: 50% 50%;
+  background: linear-gradient(180deg, #f6e2b0 0%, #e0bd7c 26%, #c39650 58%, #8c6531 100%);
+  box-shadow: 0 10px 14px rgba(0,0,0,.4), inset 0 -3px 5px rgba(60,32,6,.4), inset 0 3px 4px rgba(255,255,255,.35); }
+#kx-dm-rig .rod::before, #kx-dm-rig .rod::after { content: ""; position: absolute; top: 50%; width: 118%; aspect-ratio: 1; height: auto; transform: translateY(-50%); border-radius: 50%; pointer-events: none; display: none; }
+#kx-dm-rig .cap { position: absolute; top: 50%; border-radius: 50%; transform: translateY(-50%);
+  background: radial-gradient(circle at 36% 32%, #fff1c2 0%, #e2b85c 46%, #8d6a2c 100%); box-shadow: 0 0 0 2px rgba(80,48,10,.55), 0 4px 8px rgba(0,0,0,.4), inset 0 0 0 3px rgba(255,255,255,.2); }
+#kx-dm-flash { position: fixed; inset: 0; z-index: 2147481790; display: none; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at 50% 48%, #fffbe6 0%, rgba(255,240,190,.8) 24%, rgba(255,230,160,0) 66%); }
+#kx-dm-frame { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; z-index: 2147481850; opacity: 0; pointer-events: none; display: none; background: transparent; }
+#kx-dm-load { position: fixed; left: 50%; bottom: 12%; z-index: 2147481795; transform: translateX(-50%); display: none; padding: 8px 18px; color: #f6e6b4; font-size: 14px; letter-spacing: .14em;
+  background: linear-gradient(180deg, #4a5368, #3b4255); border: 1px solid rgba(236,229,216,.2); border-radius: 6px; box-shadow: inset 0 0 0 2px #3b4255, inset 0 0 0 3px rgba(211,188,142,.55), 0 10px 26px rgba(0,0,0,.45); }
+@media (prefers-reduced-motion: reduce) { #kx-dm-rig .shine { display: none; } }

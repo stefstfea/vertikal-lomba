@@ -1,0 +1,131 @@
+<!doctype html><html lang="id"><head>
+<link rel="modulepreload" href="js/vendor/pulau-awan-bundle.js">
+<meta charset="utf-8"><script id="kx-seen" src="src/boot/seen.js"></script><script id="kx-settings" src="src/boot/settings.js"></script><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#87c5ff"><title>7 KAIH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+<link rel="stylesheet" href="css/runtime.css">
+<script src="src/landscape/manifest.js"></script>
+<script src="src/landscape/body.js"></script>
+<script src="src/landscape/css.js"></script>
+<link rel="stylesheet" href="css/genshin-font.css">
+<link rel="stylesheet" href="css/menu-v2.css">
+<link rel="stylesheet" href="css/cloud-transition.css">
+<link rel="stylesheet" href="css/map-doorway.css">
+<link rel="stylesheet" href="css/world-interactions.css">
+<link rel="stylesheet" href="css/final-polish.css">
+</head><body class="kaih-prelude">
+
+    <div id="root"></div>
+    <div id="bg"></div>
+    <canvas id="fx"></canvas>
+    <div id="menu">
+      <svg class="kaih-logo-svg" id="kaih-logo-svg" viewBox="0 0 800 190" role="img" aria-label="7 KAIH" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="kaihLogoGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="10%" stop-color="#ffffff"/>
+            <stop offset="48%" stop-color="#ffeaa8"/>
+            <stop offset="100%" stop-color="#c9964a"/>
+          </linearGradient>
+        </defs>
+        <text x="400" y="145" text-anchor="middle" font-size="150" fill="url(#kaihLogoGradient)">7 KAIH</text>
+      </svg>
+      <p class="sub">Kebiasaan Anak Indonesia Hebat</p>
+      <nav class="menu-row" id="menu-row" aria-label="Menu utama">
+        <button id="play" class="mi-btn" type="button" aria-label="Bermain">
+          <svg class="mi-svg" viewBox="0 0 120 130" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="g-play" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset=".55" stop-color="#f4cf6a"/><stop offset="1" stop-color="#d79a2c"/></linearGradient>
+            <path id="s-play" fill-rule="evenodd" d="M26 14 L100 56 Q108 61 100 66 L26 108 Q18 112 18 103 L18 19 Q18 10 26 14Z"/>
+          </defs>
+          <use href="#s-play" class="mi-ext" transform="translate(0 9)"/>
+          <use href="#s-play" class="mi-face" fill="url(#g-play)"/>
+          <use href="#s-play" class="mi-hl"/>
+        </svg>
+          <span class="mi-lb">BERMAIN</span>
+        </button>
+        <button id="mi-settings" class="mi-btn" type="button" data-nohook="1" data-kx-toggle="1" aria-label="Settings">
+          <svg class="mi-svg" viewBox="0 0 120 130" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="g-set" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset=".55" stop-color="#f4cf6a"/><stop offset="1" stop-color="#d79a2c"/></linearGradient>
+            <path id="s-set" fill-rule="evenodd" d="M47.7 24.0 L49.1 11.2 L70.9 11.2 L72.3 24.0 L76.7 25.9 L86.8 17.8 L102.2 33.2 L94.1 43.3 L96.0 47.7 L108.8 49.1 L108.8 70.9 L96.0 72.3 L94.1 76.7 L102.2 86.8 L86.8 102.2 L76.7 94.1 L72.3 96.0 L70.9 108.8 L49.1 108.8 L47.7 96.0 L43.3 94.1 L33.2 102.2 L17.8 86.8 L25.9 76.7 L24.0 72.3 L11.2 70.9 L11.2 49.1 L24.0 47.7 L25.9 43.3 L17.8 33.2 L33.2 17.8 L43.3 25.9Z M77 60 A17 17 0 1 0 43 60 A17 17 0 1 0 77 60Z"/>
+          </defs>
+          <use href="#s-set" class="mi-ext" transform="translate(0 9)"/>
+          <use href="#s-set" class="mi-face" fill="url(#g-set)"/>
+          <use href="#s-set" class="mi-hl"/>
+        </svg>
+          <span class="mi-lb">SETTINGS</span>
+        </button>
+        <button id="mi-credits" class="mi-btn" type="button" data-nohook="1" aria-label="Credits">
+          <svg class="mi-svg" viewBox="0 0 120 130" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="g-cred" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset=".55" stop-color="#f4cf6a"/><stop offset="1" stop-color="#d79a2c"/></linearGradient>
+            <g id="s-cred"><path fill-rule="evenodd" d="M60 8 A52 52 0 1 1 59.99 8Z M60 24 A36 36 0 1 0 60.01 24Z"/><circle cx="60" cy="41" r="6.5"/><path d="M51 55 H65 V81 H70 V88 H50 V81 H55 V62 H51Z"/></g>
+          </defs>
+          <use href="#s-cred" class="mi-ext" transform="translate(0 9)"/>
+          <use href="#s-cred" class="mi-face" fill="url(#g-cred)"/>
+          <use href="#s-cred" class="mi-hl"/>
+        </svg>
+          <span class="mi-lb">CREDITS</span>
+        </button>
+      </nav>
+      <div id="err"></div>
+    </div>
+    <div id="prolog"><b>Pulau Awan</b></div>
+    <div id="wipe"></div>
+
+  
+<!-- ================= 7 KAIH AUDIO & BEAT REACTIVE DESIGNER SUITE ================= -->
+
+<div id="kaih-cloud-curtain">
+  <div class="kaih-cloud-layer c1"></div>
+  <div class="kaih-cloud-layer c2"></div>
+</div>
+<canvas id="kaih-menu-fx-canvas"></canvas>
+<!-- ================= END OF 7 KAIH DESIGNER SUITE ================= -->
+
+
+
+    <!-- ================= CUTSCENE PEMBUKA ================= -->
+    <div id="kaih-prelude" aria-hidden="true">
+      <div class="pl-slot"><div class="pl-float"><div class="pl-text pl-credit" id="pl-credit" role="heading" aria-level="2" data-kaih-sprited="true">Team WFH (Wajib Fast Hand) Productions</div></div></div>
+      <div class="pl-slot"><div class="pl-float"><div class="pl-text pl-welcome" id="pl-welcome" role="heading" aria-level="2" data-kaih-sprited="true">Welcome To Our World</div></div></div>
+      <div class="pl-slot"><div class="pl-float"><img id="pl-logo" src="assets/img/logo-7kaih.png" decoding="async" alt="7 KAIH" draggable="false" /><div id="pl-sparks"></div></div></div>
+    </div>
+    <div id="pl-flash"></div><div id="pl-ring"></div>
+    <div id="kaih-splash" role="button" tabindex="0" aria-label="Ketuk di mana saja untuk lanjut">
+      <i class="splash-orb o1"></i><i class="splash-orb o2"></i><i class="splash-orb o3"></i><i class="splash-orb o4"></i>
+      <canvas id="kaih-rift"></canvas>
+      <div class="splash-inner"><div class="splash-content">
+        <canvas id="splash-guide" width="520" height="520" aria-hidden="true"></canvas>
+        <p class="splash-tap">Ketuk di mana saja</p>
+      </div></div>
+    </div>
+    <!-- ================= END CUTSCENE ================= -->
+
+    <button id="kx-btn" type="button" aria-label="Pergi ke Ladang Langit"><span>✨</span><span>Ke Ladang Langit</span></button>
+    <div id="kx-dlg" role="dialog" aria-modal="false" aria-labelledby="kx-q"><div id="kx-card"><h2 id="kx-q">Apakah kamu ingin ke ladang langit?</h2><p>Guide akan mengajak teman-temannya turun bersamamu.</p>
+      <div class="r"><button id="kx-no" type="button">Tidak</button><button id="kx-yes" type="button">Ya</button></div></div></div>
+    <div id="kx-block"></div>
+    
+
+
+<script id="kx-skip-ctl" src="src/boot/skip-ctl.js"></script>
+<script type="module" src="src/main.js"></script>
+<script src="src/landscape/loader.js"></script>
+<script src="src/prelude/fx-canvas.js"></script>
+<script src="src/prelude/menu-audio.js"></script>
+<script src="src/prelude/bubble-ripple.js"></script>
+<script src="src/prelude/dashboard-host.js"></script>
+<script src="src/prelude/menu-v2.js"></script>
+<script src="src/prelude/cutscene-sfx.js"></script>
+<script src="src/prelude/cutscene.js"></script>
+<script src="src/guide/guide-model.js"></script>
+<script src="src/guide/guide-map.js"></script>
+<script src="src/guide/guide.js"></script>
+<script src="src/prelude/map-music.js"></script>
+<script src="src/prelude/map-doorway.js"></script>
+<script src="src/prelude/skip-dashboard.js"></script>
+<script src="src/prelude/splash-guide.js"></script>
+<script src="src/boot/ui-scale.js"></script>
+
+</body></html>

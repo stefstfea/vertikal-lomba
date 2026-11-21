@@ -1,0 +1,135 @@
+{
+  "version": "v12",
+  "expectedModuleCount": 30,
+  "modules": [
+    {
+      "name": "models.js",
+      "path": "src/landscape/modules/models.js"
+    },
+    {
+      "name": "r3f-lite.js",
+      "path": "src/landscape/modules/r3f-lite.js"
+    },
+    {
+      "name": "sfx.js",
+      "path": "src/landscape/modules/sfx.js"
+    },
+    {
+      "name": "time-of-day.js",
+      "path": "src/landscape/modules/time-of-day.js"
+    },
+    {
+      "name": "sky-tint.js",
+      "path": "src/landscape/modules/sky-tint.js"
+    },
+    {
+      "name": "terrain.js",
+      "path": "src/landscape/modules/terrain.js"
+    },
+    {
+      "name": "sky.js",
+      "path": "src/landscape/modules/sky.js"
+    },
+    {
+      "name": "rocks.js",
+      "path": "src/landscape/modules/rocks.js"
+    },
+    {
+      "name": "physics.js",
+      "path": "src/landscape/modules/physics.js"
+    },
+    {
+      "name": "main.js",
+      "path": "src/landscape/modules/main.js"
+    },
+    {
+      "name": "lighting.js",
+      "path": "src/landscape/modules/lighting.js"
+    },
+    {
+      "name": "ancient-stones.js",
+      "path": "src/landscape/modules/ancient-stones.js"
+    },
+    {
+      "name": "atmosphere.js",
+      "path": "src/landscape/modules/atmosphere.js"
+    },
+    {
+      "name": "grass.js",
+      "path": "src/landscape/modules/grass.js"
+    },
+    {
+      "name": "vfx.js",
+      "path": "src/landscape/modules/vfx.js"
+    },
+    {
+      "name": "cloudsea.js",
+      "path": "src/landscape/modules/cloudsea.js"
+    },
+    {
+      "name": "mist.js",
+      "path": "src/landscape/modules/mist.js"
+    },
+    {
+      "name": "landmarks.js",
+      "path": "src/landscape/modules/landmarks.js"
+    },
+    {
+      "name": "sky-glow.js",
+      "path": "src/landscape/modules/sky-glow.js"
+    },
+    {
+      "name": "windmills.js",
+      "path": "src/landscape/modules/windmills.js"
+    },
+    {
+      "name": "birds.js",
+      "path": "src/landscape/modules/birds.js"
+    },
+    {
+      "name": "cliffs.js",
+      "path": "src/landscape/modules/cliffs.js"
+    },
+    {
+      "name": "drag.js",
+      "path": "src/landscape/modules/drag.js"
+    },
+    {
+      "name": "camera-mode.js",
+      "path": "src/landscape/modules/camera-mode.js"
+    },
+    {
+      "name": "cam-pan.js",
+      "path": "src/landscape/modules/cam-pan.js"
+    },
+    {
+      "name": "cloud-dream.js",
+      "path": "src/landscape/modules/cloud-dream.js"
+    },
+    {
+      "name": "walk.js",
+      "path": "src/landscape/modules/walk.js"
+    },
+    {
+      "name": "ball-edit.js",
+      "path": "src/landscape/modules/ball-edit.js"
+    },
+    {
+      "name": "intro.js",
+      "path": "src/landscape/modules/intro.js"
+    },
+    {
+      "name": "time-button.js",
+      "path": "src/landscape/modules/time-button.js"
+    }
+  ],
+  "tokenScanRoots": [
+    "src/boot",
+    "src/prelude",
+    "src/landscape",
+    "src/main.js",
+    "js/vendor",
+    "assets/audio"
+  ],
+  "tokenScanFiles": []
+}
